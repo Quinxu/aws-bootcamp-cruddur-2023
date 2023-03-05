@@ -56,8 +56,8 @@ processor = BatchSpanProcessor(OTLPSpanExporter())
 provider.add_span_processor(processor)
 
 # Show this in the logs with the backend flask app (STDOUT)
-simpleProcessor = SimpleSpanProcessor(ConsoleSpanExporter())
-provider.add_span_processor(simpleProcessor)
+# simpleProcessor = SimpleSpanProcessor(ConsoleSpanExporter())
+# provider.add_span_processor(simpleProcessor)
 
 # X-Ray--------------
 # xray_url = os.getenv("AWS_XRAY_URL")
