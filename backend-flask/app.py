@@ -52,8 +52,8 @@ simpleProcessor = SimpleSpanProcessor(ConsoleSpanExporter())
 provider.add_span_processor(simpleProcessor)
 
 # X-Ray--------------
-xray_url = os.getenv("AWS_XRAY_URL")
-xray_recorder.configure(service='backend-flask', dynamic_naming=xray_url)
+# xray_url = os.getenv("AWS_XRAY_URL")
+# xray_recorder.configure(service='backend-flask', dynamic_naming=xray_url)
 
 trace.set_tracer_provider(provider)
 tracer = trace.get_tracer(__name__)
@@ -66,7 +66,7 @@ FlaskInstrumentor().instrument_app(app)
 RequestsInstrumentor().instrument()
 
 # X-Ray--------------
-XRayMiddleware(app, xray_recorder)
+# XRayMiddleware(app, xray_recorder)
 
 frontend = os.getenv('FRONTEND_URL')
 backend = os.getenv('BACKEND_URL')
@@ -80,8 +80,8 @@ cors = CORS(
 )
 
 # CloudWatch Logger
-#@app.after_request
-#def after_request(response):
+# @app.after_request
+# def after_request(response):
 #    timestamp = strftime('[%Y-%b-%d %H:%M]')
 #    LOGGER.error('%s %s %s %s %s %s', timestamp, request.remote_addr, request.method, request.scheme, request.full_path, response.status)
 #    return response
@@ -134,9 +134,10 @@ def data_notifications():
 
 
 @app.route("/api/activities/@<string:handle>", methods=['GET'])
-@xray_recorder.capture('user_activities')
+# @xray_recorder.capture('user_activities')
 def data_handle(handle):
-  model = UserActivities.run(handle,xray_recorder=xray_recorder)
+  model = UserActivities.run(handle)
+  # model = UserActivities.run(handle,xray_recorder=xray_recorder)
   if model['errors'] is not None:
     return model['errors'], 422
   else:
