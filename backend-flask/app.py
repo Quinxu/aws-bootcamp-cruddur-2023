@@ -52,8 +52,6 @@ simpleProcessor = SimpleSpanProcessor(ConsoleSpanExporter())
 provider.add_span_processor(simpleProcessor)
 
 # X-Ray--------------
-xray_url = os.getenv("AWS_XRAY_URL")
-xray_recorder.configure(service='backend-flask', dynamic_naming=xray_url)
 
 trace.set_tracer_provider(provider)
 tracer = trace.get_tracer(__name__)
@@ -66,6 +64,9 @@ FlaskInstrumentor().instrument_app(app)
 RequestsInstrumentor().instrument()
 
 # X-Ray--------------
+xray_url = os.getenv("AWS_XRAY_URL")
+xray_recorder.configure(service='backend-flask', dynamic_naming=xray_url)
+
 XRayMiddleware(app, xray_recorder)
 
 frontend = os.getenv('FRONTEND_URL')
@@ -96,6 +97,7 @@ def data_message_groups():
     return model['data'], 200
 
 @app.route("/api/messages/@<string:handle>", methods=['GET'])
+
 def data_messages(handle):
   user_sender_handle = 'andrewbrown'
   user_receiver_handle = request.args.get('user_reciever_handle')
@@ -133,6 +135,7 @@ def data_notifications():
 
 
 @app.route("/api/activities/@<string:handle>", methods=['GET'])
+@xray_recorder.capture('## data_handle')
 def data_handle(handle):
   model = UserActivities.run(handle)
   if model['errors'] is not None:
