@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta, timezone
 class UserActivities:
-  def run(user_handle):
+  def run(user_handle, xray_recorder):
     # try:
     # xray ---
       # segment = xray_recorder.begin_subsegment('user_activities')
