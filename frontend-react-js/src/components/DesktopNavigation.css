@@ -34,11 +34,11 @@ nav a.primary:hover .icon {
 }
 
 nav a.primary.active {
-  color: rgb(149,0,255) !important;
+  color: rgba(255,255,255,0.5) !important;
   font-weight: 600;
 }
 nav a.primary.active svg {
-  fill: rgb(149,0,255) !important;
+  fill: rgb(255,255,255,0.5) !important;
 }
 
 nav button.post {

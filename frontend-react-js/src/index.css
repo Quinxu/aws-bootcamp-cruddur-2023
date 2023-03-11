@@ -1,8 +1,14 @@
+:root {
+  --bg-color: rgb(90, 74, 110);
+
+  --border-color:rgba(255,255,255,0.3);
+}
+
 * { box-sizing: border-box; }
 html,body { 
   height: 100%; 
   width: 100%; 
-  background: rgb(14,3,28);
+  background: var(--bg-color);
 }
 
 body {
