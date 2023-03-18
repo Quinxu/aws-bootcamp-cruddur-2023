@@ -154,9 +154,9 @@ def data_create_message():
 
 @app.route("/api/activities/home", methods=['GET'])
 def data_home():
-  print("1*********************************")
+  
   data = HomeActivities.run()
-  print("data *********************************")
+
   print(data)
   return data, 200
 
