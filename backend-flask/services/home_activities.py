@@ -5,11 +5,12 @@ from opentelemetry import trace
 tracer = trace.get_tracer("home.activities")
 #
 
-from lib.db import pool
+from lib.db import pool, query_wrap_array
 
 class HomeActivities:
   def run():
     
+    print("2*********************************")
     #logger.info('Hello Cloudwatch! from  /api/activities/home')
 
     #Creating Spans 
@@ -20,14 +21,15 @@ class HomeActivities:
       now = datetime.now(timezone.utc).astimezone()
       span.set_attribute("app.now", now.isoformat())
       #
-      sql = """SELECT * FROM activities """
+      sql = query_wrap_array("""SELECT * FROM activities""")
+      
       with pool.connection() as conn:
         with conn.cursor() as cur:
           cur.execute(sql)
           # this will return a tuple
           # the first field being the data
           json = cur.fetchone()
-      print("*********************************")
+      print("3 jason[0] *********************************")
       print(json[0])
       return json[0]
 
