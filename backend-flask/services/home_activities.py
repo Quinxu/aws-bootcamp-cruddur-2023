@@ -27,6 +27,8 @@ class HomeActivities:
           # this will return a tuple
           # the first field being the data
           json = cur.fetchone()
+      print("*********************************")
+      print(json[0])
       return json[0]
 
       span.set_attribute("app.result_length", len(results))
