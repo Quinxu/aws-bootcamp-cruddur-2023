@@ -1,5 +1,8 @@
 import uuid
 from datetime import datetime, timedelta, timezone
+from lib.db import db
+
+
 class CreateActivity:
   def run(message, user_handle, ttl):
     model = {
@@ -56,7 +59,5 @@ class CreateActivity:
     INSERT INTO  public.activities (user_uuid, message, expires_at)
     VALUES('{user_uuid}','{message}', '{expires_at}')
     """
-    with pool.connection() as conn:
-        with conn.cursor() as cur:
-          cur.execute(sql)
-          conn.commit() 
+    querry_commit(sql)
+    
