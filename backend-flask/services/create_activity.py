@@ -49,3 +49,14 @@ class CreateActivity:
         'expires_at': (now + ttl_offset).isoformat()
       }
     return model
+
+    def create_activity(user_uuid, message, expires_at):
+
+    sql = f"""
+    INSERT INTO  public.activities (user_uuid, message, expires_at)
+    VALUES('{user_uuid}','{message}', '{expires_at}')
+    """
+    with pool.connection() as conn:
+        with conn.cursor() as cur:
+          cur.execute(sql)
+          conn.commit() 
