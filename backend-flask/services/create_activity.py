@@ -55,9 +55,9 @@ class CreateActivity:
 
     def create_activity(user_uuid, message, expires_at):
 
-    sql = f"""
-    INSERT INTO  public.activities (user_uuid, message, expires_at)
-    VALUES('{user_uuid}','{message}', '{expires_at}')
-    """
-    querry_commit(sql)
+      sql = f"""
+      INSERT INTO  public.activities (user_uuid, message, expires_at)
+      VALUES('{user_uuid}','{message}', '{expires_at}')
+      """
+      db.querry_commit(sql)
     

@@ -1,15 +1,12 @@
 from datetime import datetime, timedelta, timezone
-
+from lib.db import db
 #Acquiring a Tracer
 from opentelemetry import trace
 tracer = trace.get_tracer("home.activities")
 #
 
-from lib.db import db
-
 class HomeActivities:
   def run():
-    
     
     #logger.info('Hello Cloudwatch! from  /api/activities/home')
 
