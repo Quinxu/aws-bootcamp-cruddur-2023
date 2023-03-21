@@ -53,13 +53,16 @@ class CreateActivity:
       }
     return model
 
-    def create_activity(user_uuid, message, expires_at):
+    def create_activity(handle, message, expires_at):
 
       sql = f"""
       INSERT INTO  public.activities (user_uuid, message, expires_at)
-      VALUES('{user_uuid}','{message}', '{expires_at}') RETURNING UUID;
+      VALUES(%(user_uuid)s, %(message)s, %(expires_at)s) RETURNING uuid;
       """
-      uuid=db.querry_commit_with_returning_id(sql)
+      params = { 'user_uuid': (SELECT uuid from public.users WHERE users.handle = handle LIMIT 1),
+       'message':message, 'expires_at':expires_at
+      }
+      uuid = db.querry_commit_with_returning_id(sql, **params)
 
     #def query_object_activity():
 

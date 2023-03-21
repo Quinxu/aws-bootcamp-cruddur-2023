@@ -10,11 +10,11 @@ class Db:
     connection_url = os.getenv("CONNECTION_URL")
     self.pool = ConnectionPool(connection_url)
 
-  def querry_commit_with_returning_id(self, sql, *args):
+  def querry_commit_with_returning_id(self, sql, **kwargs):
     try:
           with self.pool.connection() as conn:
               with conn.cursor() as cur:
-                cur.execute(sql,*args)
+                cur.execute(sql,*kwargs)
                 returning_id = cur.fetchone()[0]
                 conn.commit() 
                 return returning_id
