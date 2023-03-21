@@ -10,6 +10,24 @@ class Db:
     connection_url = os.getenv("CONNECTION_URL")
     self.pool = ConnectionPool(connection_url)
 
+  def querry_commit_with_returning_id(self, sql, *args):
+    try:
+          with self.pool.connection() as conn:
+              with conn.cursor() as cur:
+                cur.execute(sql,*args)
+                returning_id = cur.fetchone()[0]
+                conn.commit() 
+                return returning_id
+
+      except Exception as error:
+            self.print_sql_err(error)
+
+      finally:
+            if conn is not None:
+                cur.close()
+                conn.close()
+                print('Database connection closed.')
+
   def querry_commit(self, sql):
       try:
           with self.pool.connection() as conn:

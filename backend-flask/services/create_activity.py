@@ -57,7 +57,10 @@ class CreateActivity:
 
       sql = f"""
       INSERT INTO  public.activities (user_uuid, message, expires_at)
-      VALUES('{user_uuid}','{message}', '{expires_at}')
+      VALUES('{user_uuid}','{message}', '{expires_at}') RETURNING UUID;
       """
-      db.querry_commit(sql)
+      uuid=db.querry_commit_with_returning_id(sql)
+
+    #def query_object_activity():
+
     
