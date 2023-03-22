@@ -1,5 +1,7 @@
 from psycopg_pool import ConnectionPool
-import os
+import os, sys
+
+
 
 
 class Db:
@@ -12,21 +14,22 @@ class Db:
 
   def querry_commit_with_returning_id(self, sql, **kwargs):
     try:
-          with self.pool.connection() as conn:
-              with conn.cursor() as cur:
-                cur.execute(sql,*kwargs)
-                returning_id = cur.fetchone()[0]
-                conn.commit() 
-                return returning_id
+        with self.pool.connection() as conn:
+            with conn.cursor() as cur:
+              cur.execute(sql,*kwargs)
+              returning_id = cur.fetchone()[0]
+              conn.commit() 
+              return returning_id
 
-      except Exception as error:
-            self.print_sql_err(error)
+    except Exception as error:
+            #self.print_sql_err(error)
+          print(error)
 
-      finally:
-            if conn is not None:
-                cur.close()
-                conn.close()
-                print('Database connection closed.')
+    finally:
+          if conn is not None:
+              cur.close()
+              conn.close()
+              print('Database connection closed.')
 
   def querry_commit(self, sql):
       try:
