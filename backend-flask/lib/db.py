@@ -1,25 +1,45 @@
 from psycopg_pool import ConnectionPool
-import os, sys
-
+import os, sys, re
+from flask import current_app as app
+import colorama
+from colorama import Fore, Back, Style
 
 
 
 class Db:
   def __init__(self):
     self.init_pool()
+    colorama.init()
+
+  def print_in_color(self, type)
+
+
+  def template (self, name):
+    template_path = os.path.join(app.root_path, 'db', 'sql', name + '.sql')
+
+    with open(template_path, 'r') as f:
+      template_content = f.read()
+    return template_content
+
 
   def init_pool(self):
     connection_url = os.getenv("CONNECTION_URL")
     self.pool = ConnectionPool(connection_url)
 
-  def querry_commit_with_returning_id(self, sql, **kwargs):
+  def querry_commit(self, sql, **kwargs):
+    print("--------query commit sql-----")
+    print(sql + "\n")
     try:
+        pattern = r"\bRETURNING\b"
+
         with self.pool.connection() as conn:
             with conn.cursor() as cur:
               cur.execute(sql,*kwargs)
               returning_id = cur.fetchone()[0]
               conn.commit() 
-              return returning_id
+              if re.match(pattern,sql) is not None:
+                print("--------query commit returning id")
+                return returning_id
 
     except Exception as error:
             #self.print_sql_err(error)
@@ -31,21 +51,21 @@ class Db:
               conn.close()
               print('Database connection closed.')
 
-  def querry_commit(self, sql):
-      try:
-          with self.pool.connection() as conn:
-              with conn.cursor() as cur:
-                cur.execute(sql)
-                conn.commit() 
+  # def querry_commit(self, sql):
+  #     try:
+  #         with self.pool.connection() as conn:
+  #             with conn.cursor() as cur:
+  #               cur.execute(sql)
+  #               conn.commit() 
 
-      except Exception as error:
-            self.print_sql_err(error)
+  #     except Exception as error:
+  #           self.print_sql_err(error)
 
-      finally:
-            if conn is not None:
-                cur.close()
-                conn.close()
-                print('Database connection closed.')
+  #     finally:
+  #           if conn is not None:
+  #               cur.close()
+  #               conn.close()
+  #               print('Database connection closed.')
 
   def query_json_object(self, sql):
     print("--------query json object sql-----")

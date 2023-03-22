@@ -60,10 +60,12 @@ class CreateActivity:
     
   def create_activity(handle, message, expires_at):
 
-    sql = f"""
-    INSERT INTO  public.activities (user_uuid, message, expires_at)
-    VALUES(%(user_uuid)s, %(message)s, %(expires_at)s) RETURNING uuid;
-    """
+    # sql = f"""
+    # INSERT INTO  public.activities (user_uuid, message, expires_at)
+    # VALUES(%(user_uuid)s, %(message)s, %(expires_at)s) RETURNING uuid;
+    # """
+    sql = db.template('create_activity')
+
     paramsDict = { 'user_uuid': 'SELECT uuid from public.users WHERE users.handle = {handle} LIMIT 1',
       'message':message, 'expires_at':expires_at
     }
