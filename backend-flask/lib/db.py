@@ -49,7 +49,8 @@ class Db:
 
     finally:
           if conn is not None:
-              cur.close()
+              if cur is not None:
+                cur.close()
               conn.close()
               print('Database connection closed.')
 

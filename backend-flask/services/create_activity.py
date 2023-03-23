@@ -46,7 +46,7 @@ class CreateActivity:
     else:
 
       expires_at = (now + ttl_offset).isoformat()
-      CreateActivity.create_activity(user_handle, message, expires_at)
+      uuid = CreateActivity.create_activity(user_handle, message, expires_at)
     
       model['data'] = {
         'uuid': uuid.uuid4(),
@@ -65,17 +65,18 @@ class CreateActivity:
     # INSERT INTO  public.activities (user_uuid, message, expires_at)
     # VALUES (%(user_uuid)s, %(message)s, %(expires_at)s) RETURNING uuid;
     #  """
-    print ("\033[41m------ handle = %s ---\033[0m]", handle)
+    #print (f"\033[41m------ handle = {handle} ---\033[0m]")
 
     sql = db.template('create_activity')
 
-    paramsDict = { 'user_uuid': 'SELECT uuid from public.users WHERE users.handle = ${handle} LIMIT 1',
-      'message':'{message}', 'expires_at': '{expires_at}',
+    paramsDict = { 'handle': handle,
+      'message': message, 'expires_at': expires_at
     }
     
-    print ('\033[41m------ user_uuid = %s, message = %s, expires_at = %s -----\033[0m]', paramsDict['user_uuid'], paramsDict['message'], paramsDict['expires_at'])
+    print (f"\033[36m------ user_uuid = {paramsDict['handle']}, message = {paramsDict['message']}, expires_at = {paramsDict['expires_at']} -----\033[0m]")
     
     uuid = db.querry_commit(sql, paramsDict)
+    return uuid
 
   #def query_object_activity():
 
@@ -85,4 +86,3 @@ class CreateActivity:
     print(cyan + f'\n------{title} SQL Statement--------' + no_color)
     print(sql + '\n')
 
-    
