@@ -50,7 +50,7 @@ class CreateActivity:
     
       model['data'] = {
         'uuid': uuid.uuid4(),
-        'display_name': 'Andrew Brown',
+        'display_name': 'Quin Xu',
         'handle':  user_handle,
         'message': message,
         'created_at': now.isoformat(),
@@ -61,17 +61,20 @@ class CreateActivity:
     
   def create_activity(handle, message, expires_at):
 
-    sql = f"""
-    INSERT INTO  public.activities (user_uuid, message, expires_at)
-    VALUES (%(user_uuid)s, %(message)s, %(expires_at)s) RETURNING uuid;
-     """
-    
-    #sql = db.template('create_activity')
+    # sql = f"""
+    # INSERT INTO  public.activities (user_uuid, message, expires_at)
+    # VALUES (%(user_uuid)s, %(message)s, %(expires_at)s) RETURNING uuid;
+    #  """
+    print ("\033[41m------ handle = %s ---\033[0m]", handle)
 
-    paramsDict = { 'user_uuid': 'SELECT uuid from public.users WHERE users.handle = {handle} LIMIT 1',
-      'message':'{message}', 'expires_at': '{expires_at}'
+    sql = db.template('create_activity')
+
+    paramsDict = { 'user_uuid': 'SELECT uuid from public.users WHERE users.handle = ${handle} LIMIT 1',
+      'message':'{message}', 'expires_at': '{expires_at}',
     }
-
+    
+    print ('\033[41m------ user_uuid = %s, message = %s, expires_at = %s -----\033[0m]', paramsDict['user_uuid'], paramsDict['message'], paramsDict['expires_at'])
+    
     uuid = db.querry_commit(sql, paramsDict)
 
   #def query_object_activity():

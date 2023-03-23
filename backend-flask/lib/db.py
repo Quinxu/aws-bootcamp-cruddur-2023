@@ -2,9 +2,6 @@ from psycopg_pool import ConnectionPool
 import os, sys, re
 from flask import current_app as app
 
-
-
-
 class Db:
   def __init__(self):
     self.init_pool()
@@ -28,7 +25,7 @@ class Db:
     connection_url = os.getenv("CONNECTION_URL")
     self.pool = ConnectionPool(connection_url)
 
-  def querry_commit(self, sql, **kwargs):
+  def querry_commit(self, sql, kwargs):
     # print("--------query commit sql-----")
     # print(sql + "\n")
     
