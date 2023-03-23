@@ -5,6 +5,7 @@ from lib.db import db
 
 class CreateActivity:
   def run(message, user_handle, ttl):
+    print('enter create activity')
     model = {
       'errors': None,
       'data': None
@@ -46,7 +47,7 @@ class CreateActivity:
 
       expires_at = (now + ttl_offset).isoformat()
       CreateActivity.create_activity(user_handle, message, expires_at)
-
+    
       model['data'] = {
         'uuid': uuid.uuid4(),
         'display_name': 'Andrew Brown',
@@ -60,17 +61,25 @@ class CreateActivity:
     
   def create_activity(handle, message, expires_at):
 
-    # sql = f"""
-    # INSERT INTO  public.activities (user_uuid, message, expires_at)
-    # VALUES(%(user_uuid)s, %(message)s, %(expires_at)s) RETURNING uuid;
-    # """
-    sql = db.template('create_activity')
+    sql = f"""
+    INSERT INTO  public.activities (user_uuid, message, expires_at)
+    VALUES (%(user_uuid)s, %(message)s, %(expires_at)s) RETURNING uuid;
+     """
+    
+    #sql = db.template('create_activity')
 
     paramsDict = { 'user_uuid': 'SELECT uuid from public.users WHERE users.handle = {handle} LIMIT 1',
-      'message':message, 'expires_at':expires_at
+      'message':'{message}', 'expires_at': '{expires_at}'
     }
-    uuid = db.querry_commit_with_returning_id(sql, **paramsDict)
+
+    uuid = db.querry_commit(sql, paramsDict)
 
   #def query_object_activity():
+
+  def print_in_color(title, sql):
+    cyan ='\033[96m'
+    no_color ='\033[0m'
+    print(cyan + f'\n------{title} SQL Statement--------' + no_color)
+    print(sql + '\n')
 
     

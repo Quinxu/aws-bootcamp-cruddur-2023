@@ -1,18 +1,20 @@
 from psycopg_pool import ConnectionPool
 import os, sys, re
 from flask import current_app as app
-import colorama
-from colorama import Fore, Back, Style
+
 
 
 
 class Db:
   def __init__(self):
     self.init_pool()
-    colorama.init()
+    
 
-  def print_in_color(self, type)
-
+  def print_in_color(self, title, sql):
+    cyan ='\033[96m'
+    no_color ='\033[0m'
+    print(cyan + f'\n------{title} SQL Statement--------' + no_color)
+    print(sql + '\n')
 
   def template (self, name):
     template_path = os.path.join(app.root_path, 'db', 'sql', name + '.sql')
@@ -27,14 +29,17 @@ class Db:
     self.pool = ConnectionPool(connection_url)
 
   def querry_commit(self, sql, **kwargs):
-    print("--------query commit sql-----")
-    print(sql + "\n")
+    # print("--------query commit sql-----")
+    # print(sql + "\n")
+    
+    self.print_in_color('query commit',sql)
+    
     try:
         pattern = r"\bRETURNING\b"
 
         with self.pool.connection() as conn:
             with conn.cursor() as cur:
-              cur.execute(sql,*kwargs)
+              cur.execute(sql, kwargs)
               returning_id = cur.fetchone()[0]
               conn.commit() 
               if re.match(pattern,sql) is not None:
@@ -68,8 +73,9 @@ class Db:
   #               print('Database connection closed.')
 
   def query_json_object(self, sql):
-    print("--------query json object sql-----")
-    print(sql + "\n")
+    # print("--------query json object sql-----")
+    # print(sql + "\n")
+    self.print_in_color('query json object',sql)
     
     wrapped_sql = self.query_wrap_object(sql)
     with self.pool.connection() as conn:
@@ -81,8 +87,10 @@ class Db:
           return json[0]
     
   def query_json_object_array(self, sql):
-    print("--------query json object array sql-----")
-    print(sql + "\n")
+    # print("--------query json object array sql-----")
+    # print(sql + "\n")
+    
+    self.print_in_color('query json object array',sql)
     
     wrapped_sql = self.query_wrap_array(sql)
     with self.pool.connection() as conn:
