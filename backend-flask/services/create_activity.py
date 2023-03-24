@@ -47,7 +47,9 @@ class CreateActivity:
 
       expires_at = (now + ttl_offset).isoformat()
       uuid = CreateActivity.create_activity(user_handle, message, expires_at)
-    
+      
+      json_object = CreateActivity.query_object_activity(uuid)
+      
       model['data'] = {
         'uuid': uuid.uuid4(),
         'display_name': 'Quin Xu',
@@ -67,7 +69,7 @@ class CreateActivity:
     #  """
     #print (f"\033[41m------ handle = {handle} ---\033[0m]")
 
-    sql = db.template('create_activity')
+    sql = db.template('db/sql/activity', 'create.sql')
 
     paramsDict = {'handle': handle,
       'message': message, 'expires_at': expires_at
@@ -80,7 +82,8 @@ class CreateActivity:
     
     return uuid
 
-  #def query_object_activity():
+  def query_object_activity(uuid):
+    sql = db.template('/object')
 
   def print_in_color(title, sql):
     cyan ='\033[96m'

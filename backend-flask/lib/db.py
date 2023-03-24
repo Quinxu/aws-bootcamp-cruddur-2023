@@ -13,8 +13,8 @@ class Db:
     print(cyan + f'\n------{title} SQL Statement--------' + no_color)
     print(sql + '\n')
 
-  def template (self, name):
-    template_path = os.path.join(app.root_path, 'db', 'sql', name + '.sql')
+  def template (self, subfolders, name):
+    template_path = os.path.join(app.root_path, subfolders, name)
 
     with open(template_path, 'r') as f:
       template_content = f.read()
