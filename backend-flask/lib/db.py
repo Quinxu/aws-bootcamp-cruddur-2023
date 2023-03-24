@@ -10,11 +10,13 @@ class Db:
   def print_in_color(self, title, sql):
     cyan ='\033[96m'
     no_color ='\033[0m'
-    print(cyan + f'\n------{title} SQL Statement--------' + no_color)
+    print(cyan + f'\n------{title}--------' + no_color)
     print(sql + '\n')
 
   def template (self, subfolders, name):
     template_path = os.path.join(app.root_path, subfolders, name)
+
+    self.print_in_color('SQL file path', template_path)
 
     with open(template_path, 'r') as f:
       template_content = f.read()
@@ -26,10 +28,8 @@ class Db:
     self.pool = ConnectionPool(connection_url)
 
   def querry_commit(self, sql, **kwargs):
-    # print("--------query commit sql-----")
-    # print(sql + "\n")
     
-    self.print_in_color('query commit',sql)
+    self.print_in_color('query commit SQL statement',sql)
     
     try:
         pattern = r"\bRETURNING\b"
@@ -40,55 +40,31 @@ class Db:
               returning_id = cur.fetchone()[0]
               conn.commit() 
               if re.match(pattern,sql) is not None:
-                print("--------query commit returning id")
+                print("--------query commit returning id -----")
                 return returning_id
 
     except Exception as error:
             #self.print_sql_err(error)
           print(error)
 
-    # finally:
-    #       if conn is not None:
-    #           if cur is not None:
-    #             cur.close()
-    #           conn.close()
-    #           print('Database connection closed.')
 
-  # def querry_commit(self, sql):
-  #     try:
-  #         with self.pool.connection() as conn:
-  #             with conn.cursor() as cur:
-  #               cur.execute(sql)
-  #               conn.commit() 
+  def query_json_object(self, sql, **kwargs):
+  
+    self.print_in_color('query json object SQL statement', sql)
+    self.print_args(kwargs)
 
-  #     except Exception as error:
-  #           self.print_sql_err(error)
-
-  #     finally:
-  #           if conn is not None:
-  #               cur.close()
-  #               conn.close()
-  #               print('Database connection closed.')
-
-  def query_json_object(self, sql):
-    # print("--------query json object sql-----")
-    # print(sql + "\n")
-    self.print_in_color('query json object',sql)
-    
     wrapped_sql = self.query_wrap_object(sql)
     with self.pool.connection() as conn:
         with conn.cursor() as cur:
-          cur.execute(wrapped_sql)
+          cur.execute(wrapped_sql, kwargs)
           # this will return a tuple
           # the first field being the data
           json = cur.fetchone()
           return json[0]
     
   def query_json_object_array(self, sql):
-    # print("--------query json object array sql-----")
-    # print(sql + "\n")
     
-    self.print_in_color('query json object array',sql)
+    self.print_in_color('query json object array SQL statement', sql)
     
     wrapped_sql = self.query_wrap_array(sql)
     with self.pool.connection() as conn:
@@ -115,6 +91,12 @@ class Db:
     """
     return sql
 
+  def print_args(self, args):
+    self.print_in_color('pass in arguments', '')
+    for key, value in args.items():
+      print(key,":", value)
+
+
   def print_sql_err(self, err):
       # get details about the exception
       err_type, err_obj, traceback = sys.exc_info()
@@ -131,5 +113,3 @@ class Db:
       print ("pgcode:", err.pgcode, "\n")
 
 db = Db() 
-
-
