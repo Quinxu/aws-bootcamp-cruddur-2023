@@ -69,13 +69,15 @@ class CreateActivity:
 
     sql = db.template('create_activity')
 
-    paramsDict = { 'handle': handle,
+    paramsDict = {'handle': handle,
       'message': message, 'expires_at': expires_at
     }
     
-    print (f"\033[36m------ user_uuid = {paramsDict['handle']}, message = {paramsDict['message']}, expires_at = {paramsDict['expires_at']} -----\033[0m]")
+    print ("\033[36m" + f"------ handle = {handle}, message = {message}, expires_at = {expires_at} -----\033[0m]")
     
-    uuid = db.querry_commit(sql, paramsDict)
+    uuid = db.querry_commit(sql, handle = handle,
+      message = message, expires_at = expires_at)
+    
     return uuid
 
   #def query_object_activity():

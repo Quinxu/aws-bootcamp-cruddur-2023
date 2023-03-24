@@ -25,7 +25,7 @@ class Db:
     connection_url = os.getenv("CONNECTION_URL")
     self.pool = ConnectionPool(connection_url)
 
-  def querry_commit(self, sql, kwargs):
+  def querry_commit(self, sql, **kwargs):
     # print("--------query commit sql-----")
     # print(sql + "\n")
     
@@ -47,12 +47,12 @@ class Db:
             #self.print_sql_err(error)
           print(error)
 
-    finally:
-          if conn is not None:
-              if cur is not None:
-                cur.close()
-              conn.close()
-              print('Database connection closed.')
+    # finally:
+    #       if conn is not None:
+    #           if cur is not None:
+    #             cur.close()
+    #           conn.close()
+    #           print('Database connection closed.')
 
   # def querry_commit(self, sql):
   #     try:
