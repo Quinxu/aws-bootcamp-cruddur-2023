@@ -29,24 +29,24 @@ class Db:
 
   def querry_commit(self, sql, **kwargs):
     
-    self.print_in_color('query commit SQL statement',sql)
-    
-    try:
-        pattern = r"\bRETURNING\b"
+    self.print_in_color('query commit SQL statement', sql)
+    self.print_args (kwargs)
 
+    try:
+        pattern = r"RETURNING"
+  
         with self.pool.connection() as conn:
             with conn.cursor() as cur:
               cur.execute(sql, kwargs)
               returning_id = cur.fetchone()[0]
               conn.commit() 
-              if re.match(pattern,sql) is not None:
+              if re.search(pattern,sql):
                 print("--------query commit returning id -----")
                 return returning_id
 
     except Exception as error:
             #self.print_sql_err(error)
           print(error)
-
 
   def query_json_object(self, sql, **kwargs):
   
@@ -61,6 +61,7 @@ class Db:
           # the first field being the data
           json = cur.fetchone()
           return json[0]
+          
     
   def query_json_object_array(self, sql):
     
@@ -94,7 +95,7 @@ class Db:
   def print_args(self, args):
     self.print_in_color('pass in arguments', '')
     for key, value in args.items():
-      print(key,":", value)
+       print(key,":", value)
 
 
   def print_sql_err(self, err):

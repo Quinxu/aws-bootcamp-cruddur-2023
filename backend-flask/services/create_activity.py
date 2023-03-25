@@ -5,7 +5,7 @@ from lib.db import db
 
 class CreateActivity:
   def run(message, user_handle, ttl):
-    print('enter create activity')
+    
     model = {
       'errors': None,
       'data': None
@@ -57,12 +57,6 @@ class CreateActivity:
     
   def create_activity(handle, message, expires_at):
 
-    # sql = f"""
-    # INSERT INTO  public.activities (user_uuid, message, expires_at)
-    # VALUES (%(user_uuid)s, %(message)s, %(expires_at)s) RETURNING uuid;
-    #  """
-    #print (f"\033[41m------ handle = {handle} ---\033[0m]")
-
     sql = db.template('db/sql/activities', 'create.sql')
 
     paramsDict = {'handle': handle,
@@ -71,19 +65,20 @@ class CreateActivity:
     
     print ("\033[36m" + f"------ handle = {handle}, message = {message}, expires_at = {expires_at} -----\033[0m]")
     
-    uuid = db.querry_commit(sql, handle = handle,
-      message = message, expires_at = expires_at)
+    uuid = db.querry_commit(sql, handle=handle,
+      message=message, expires_at=expires_at)
     
+    print (f'------uuid = {uuid}--------')
+
     return uuid
 
   def query_object_activity(uuid):
     sql = db.template('db/sql/activities', 'object.sql')
-    return db.query_json_object(sql, uuid = uuid)
+    return db.query_json_object(sql, uuid=uuid)
 
 
   def print_in_color(title, sql):
     cyan ='\033[96m'
     no_color ='\033[0m'
-    print(cyan + f'\n------{title} SQL Statement--------' + no_color)
+    print(cyan + f'\n------{title}--------' + no_color)
     print(sql + '\n')
-
