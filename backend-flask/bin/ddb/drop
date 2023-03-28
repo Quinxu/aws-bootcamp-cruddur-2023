@@ -1,4 +1,16 @@
 #! /usr/bin/bash
 
+if [ -z "$1" ]; then
+    echo "No Table name argument is supplied."
+    ENDPOINT_URL = ""
+else
+    ENDPOINT_URL="--endpoint-url=http://localhost:8000"
+fi
+
+if [ "$1" == "prod" ]; then
+    ENDPOINT_URL = ""
+else
+    ENDPOINT_URL="--endpoint-url=http://localhost:8000"
+fi
 
 aws dynamodb delete-table --table-name Music
