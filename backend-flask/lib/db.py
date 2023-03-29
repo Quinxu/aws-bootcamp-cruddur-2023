@@ -63,14 +63,14 @@ class Db:
           return json[0]
           
     
-  def query_json_object_array(self, sql):
+  def query_json_object_array(self, sql, **kwargs):
     
     self.print_in_color('query json object array SQL statement', sql)
     
     wrapped_sql = self.query_wrap_array(sql)
     with self.pool.connection() as conn:
         with conn.cursor() as cur:
-          cur.execute(wrapped_sql)
+          cur.execute(wrapped_sql, kwargs)
           # this will return a tuple
           # the first field being the data
           json = cur.fetchone()
