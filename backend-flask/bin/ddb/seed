@@ -55,44 +55,46 @@ def get_user_uuids():
   return results
 
 def create_message_group(client,message_group_uuid, my_user_uuid, last_message_at=None, message=None, other_user_uuid=None, other_user_display_name=None, other_user_handle=None):
-  print("create_message_group")
-  # table_name = 'cruddur-messages'
-  # record = {
-  #   'pk':   {'S': f"GRP#{my_user_uuid}"},
-  #   'sk':   {'S': last_message_at},
-  #   'message_group_uuid': {'S': message_group_uuid},
-  #   'message':  {'S': message},
-  #   'user_uuid': {'S': other_user_uuid},
-  #   'user_display_name': {'S': other_user_display_name},
-  #   'user_handle': {'S': other_user_handle}
-  # }
+  print("==============create_message_group=================")
+  table_name = 'cruddur-messages'
+  record = {
+    'pk':   {'S': f"GRP#{my_user_uuid}"},
+    'sk':   {'S': last_message_at},
+    'message_group_uuid': {'S': message_group_uuid},
+    'message':  {'S': message},
+    'user_uuid': {'S': other_user_uuid},
+    'user_display_name': {'S': other_user_display_name},
+    'user_handle': {'S': other_user_handle}
+  }
 
-  # response = client.put_item(
-  #   TableName=table_name,
-  #   Item=record
-  # )
-  # print(response)
+  response = client.put_item(
+    TableName=table_name,
+    Item=record
+  )
+  print(response)
 
 def create_message(client,message_group_uuid, created_at, message, my_user_uuid, my_user_display_name, my_user_handle):
-  print("create_message")
+  print("==================create_message==============================")
   # Entity # Message Group Id
-  # record = {
-  #   'pk':   {'S': f"MSG#{message_group_uuid}"},
-  #   'sk':   {'S': created_at },
-  #   'message_uuid': { 'S': str(uuid.uuid4()) },
-  #   'message': {'S': message},
-  #   'user_uuid': {'S': my_user_uuid},
-  #   'user_display_name': {'S': my_user_display_name},
-  #   'user_handle': {'S': my_user_handle}
-  # }
-  # # insert the record into the table
-  # table_name = 'cruddur-messages'
-  # response = client.put_item(
-  #   TableName=table_name,
-  #   Item=record
-  # )
-  # # print the response
-  # print(response)
+  record = {
+    'pk':   {'S': f"MSG#{message_group_uuid}"},
+    'sk':   {'S': created_at },
+    'message_uuid': { 'S': str(uuid.uuid4()) },
+    'message': {'S': message},
+    'user_uuid': {'S': my_user_uuid},
+    'user_display_name': {'S': my_user_display_name},
+    'user_handle': {'S': my_user_handle}
+  }
+  # insert the record into the table
+  table_name = 'cruddur-messages'
+  response = client.put_item(
+    TableName=table_name,
+    Item=record
+  )
+  # print the response
+  print(response)
+
+
 
 conversation = """
 Person 1: Have you ever watched Babylon 5? It's one of my favorite TV shows!
@@ -200,13 +202,16 @@ Person 2: Yes, that's a good point. Babylon 5 was really great at creating a div
 Person 1: And Zathras was just one example of that. He was a small but important part of the show's legacy, and he's still remembered fondly by fans today.
 Person 2: Definitely. I think his character is a great example of the show's ability to balance humor and heart, and to create memorable and beloved characters that fans will cherish for years to come.
 """
-def create_message(client, message_group_uuid, created_at, message, my_user_uuid, my_user_display_name, my_user_handle):
-    print("")
+
 
 #message_group_uuid = str(uuid.uuid4())
 message_group_uuid = "5ae290ed-55d1-47a0-bc6d-fe2bc2700399" #str(uuid.uuid4())
 users = get_user_uuids()
 now = datetime.now(timezone.utc).astimezone()
+
+create_message_group(client=dynamodb,message_group_uuid=message_group_uuid, my_user_uuid=users['my_user']['uuid'], 
+                    last_message_at=now.isoformat(), message="this is a filler", other_user_uuid=users['other_user']['uuid'], 
+                    other_user_display_name=users['other_user']['display_name'], other_user_handle=users['other_user']['handle'])
 
 lines = conversation.lstrip('\n').rstrip('\n').split('\n')
 for i in range(len(lines)):
