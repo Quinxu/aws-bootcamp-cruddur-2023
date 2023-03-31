@@ -21,11 +21,15 @@ message_group_uuid = "5ae290ed-55d1-47a0-bc6d-fe2bc2700399"
 # define the query parameters
 query_params = {
   'TableName': table_name,
-  'KeyConditionExpression': 'pk = :pkey, AND sk = :skey',
+  'KeyConditionExpression': 'pk = :pkey AND begins_with(sk, :year)',
+  # 'KeyConditionExpression': 'pk = :pkey AND sk BETWEEN :start_date and :end_date',
   'ScanIndexForward': True,
   'Limit': 20,
   'ExpressionAttributeValues': {
-    ':pkey': {'S': f"MSG#{message_group_uuid}"}
+    ':pkey': {'S': f"MSG#{message_group_uuid}"},
+   ':year': {'S': f"2023-03-31T16:45:5"},
+    # ':start_date': {'S': f"2023-03-01T00:00:00"},
+    # ':end_date': {'S': f"2023-03-10T23:59:59"}
   },
   'ReturnConsumedCapacity': 'TOTAL'
 }
