@@ -10,7 +10,7 @@ class Db:
   def print_in_color(self, title, sql):
     cyan ='\033[96m'
     no_color ='\033[0m'
-    print(cyan + f'\n------{title}--------' + no_color)
+    print(cyan + f'\n============={title}===============' + no_color)
     print(sql + '\n')
 
   def template (self, subfolders, name):
@@ -41,7 +41,7 @@ class Db:
               returning_id = cur.fetchone()[0]
               conn.commit() 
               if re.search(pattern,sql):
-                print("--------query commit returning id -----")
+                print("===========query commit returning id ==============")
                 return returning_id
 
     except Exception as error:
@@ -76,6 +76,15 @@ class Db:
           json = cur.fetchone()
           return json[0]
   
+  def query_value(self,sql):
+    self.print_in_color('Query value',sql)
+
+    with self.pool.connection() as conn:
+      with conn.cursor() as cur:
+        cur.execute(sql)
+        json = cur.fetchone()
+        return json[0]
+
   def query_wrap_object(self, template):
       sql = f"""
       (SELECT COALESCE(row_to_json(object_row),'{{}}'::json) FROM (
