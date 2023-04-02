@@ -42,6 +42,7 @@ my_user_uuid = get_user_uuids('quinxu')#"8947eb6e-8c2b-449e-b6e9-246112ae87eb"
 query_params = {
   'TableName': table_name,
   'KeyConditionExpression': 'pk = :pkey',
+  'ScanIndexForward': True, # in ascending order
   'ExpressionAttributeValues': {
     ':pkey': {'S': f"GRP#{my_user_uuid}"}
   },
