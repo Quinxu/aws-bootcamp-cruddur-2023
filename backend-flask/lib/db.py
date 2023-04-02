@@ -48,6 +48,27 @@ class Db:
             #self.print_sql_err(error)
           print(error)
 
+  def querry_commit(self, sql):
+    
+    self.print_in_color('query commit SQL statement', sql)
+    #self.print_args (kwargs)
+
+    try:
+        pattern = r"RETURNING"
+  
+        with self.pool.connection() as conn:
+            with conn.cursor() as cur:
+              cur.execute(sql)
+              returning_id = cur.fetchone()[0]
+              conn.commit() 
+              if re.search(pattern,sql):
+                print("===========query commit returning id ==============")
+                return returning_id
+
+    except Exception as error:
+            #self.print_sql_err(error)
+          print(error)
+
   def query_json_object(self, sql, **kwargs):
   
     self.print_in_color('query json object SQL statement', sql)

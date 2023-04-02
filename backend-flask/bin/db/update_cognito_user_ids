@@ -10,16 +10,18 @@ sys.path.append(parent_path)
 from lib.db import db
 
 def update_users_with_cognito_user_id(handle,sub):
-  sql = """
-    UPDATE public.users
-    SET cognito_user_id = %(sub)s
-    WHERE
-      users.handle = %(handle)s;
-  """
-  db.query_commit(sql,{
-    'handle' : handle,
-    'sub' : sub
-  })
+  sql = f" \
+  UPDATE public.users \
+  SET cognito_user_id = {sub} \
+  WHERE \
+  users.handle = {handle} \
+  "
+  # db.query_commit(sql,{
+  #   'handle' : handle,
+  #   'sub' : sub
+  # })
+
+  db.query_commit(sql)
 
 def get_cognito_user_ids():
   userpool_id = os.getenv("AWS_COGNITO_USER_POOL_ID")
@@ -45,8 +47,8 @@ def get_cognito_user_ids():
 users = get_cognito_user_ids()
 
 for handle, sub in users.items():
-  print('----',handle,sub)
+  print(f'=======get cognito user ids with handle={handle} sub = {sub}===========')
   update_users_with_cognito_user_id(
-    handle=handle,
-    sub=sub
+    handle,
+    sub
   )
