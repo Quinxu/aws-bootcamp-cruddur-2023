@@ -12,16 +12,16 @@ from lib.db import db
 def update_users_with_cognito_user_id(handle,sub):
   sql = f" \
   UPDATE public.users \
-  SET cognito_user_id = {sub} \
+  SET cognito_user_id = '{sub}' \
   WHERE \
-  users.handle = {handle} \
+  users.handle = '{handle}' \
   "
   # db.query_commit(sql,{
   #   'handle' : handle,
   #   'sub' : sub
   # })
 
-  db.query_commit(sql)
+  db.querry_commit(sql)
 
 def get_cognito_user_ids():
   userpool_id = os.getenv("AWS_COGNITO_USER_POOL_ID")

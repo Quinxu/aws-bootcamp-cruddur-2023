@@ -55,15 +55,19 @@ class Db:
 
     try:
         pattern = r"RETURNING"
+        is_returning_id = re.search(pattern, sql)
   
         with self.pool.connection() as conn:
             with conn.cursor() as cur:
               cur.execute(sql)
-              returning_id = cur.fetchone()[0]
-              conn.commit() 
-              if re.search(pattern,sql):
+              if is_returning_id:
                 print("===========query commit returning id ==============")
-                return returning_id
+                returning_id = cur.fetchone()[0]
+                
+              conn.commit()
+              if is_returning_id:
+                return returning_id 
+              
 
     except Exception as error:
             #self.print_sql_err(error)
