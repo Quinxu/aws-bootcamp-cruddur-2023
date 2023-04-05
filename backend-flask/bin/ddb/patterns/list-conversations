@@ -3,6 +3,7 @@
 import boto3
 import sys, os
 import json
+import datetime
 
 current_path = os.path.dirname(os.path.abspath(__file__))
 print (f'current_path = {current_path}')
@@ -38,13 +39,15 @@ def get_user_uuids(handles):
 
 my_user_uuid = get_user_uuids('quinxu')#"8947eb6e-8c2b-449e-b6e9-246112ae87eb"
 
+current_year = datetime.datetime.now().year
 # define the query parameters
 query_params = {
   'TableName': table_name,
-  'KeyConditionExpression': 'pk = :pkey',
+  'KeyConditionExpression': 'pk = :pkey AND begins_with(sk,:year)',
   'ScanIndexForward': True, # in ascending order
   'ExpressionAttributeValues': {
-    ':pkey': {'S': f"GRP#{my_user_uuid}"}
+    ':pkey': {'S': f"GRP#{my_user_uuid}"},
+    ':year': {'S': str(current_year) }
   },
   'ReturnConsumedCapacity': 'TOTAL'
 }

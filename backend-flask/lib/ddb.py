@@ -25,15 +25,16 @@ class Ddb:
         ':pkey': {'S': f"GRP#{my_user_uuid}"}
         }
     }
-    print('query-params')
+    print(f'================query-params==========================')
     print(query_params)
-    print('client')
+    print('================client==========================')
     print(client)
 
     # query the table
     response = client.query(**query_params)
     items = response['Items']
-
+    print("=================items============================")
+    print(items)
     results = []
     for item in items:
         last_sent_at = item['sk']['S']
@@ -45,3 +46,4 @@ class Ddb:
         'created_at': last_sent_at
         })
     return results
+    
