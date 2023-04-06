@@ -14,7 +14,7 @@ from services.messages import *
 from services.create_message import *
 from services.show_activity import *
 
-from lib.cognito_jwt_token import CognitoJwtToken, extract_access_token, TokenVerifyError
+#from lib.cognito_jwt_token import CognitoJwtToken, extract_access_token, TokenVerifyError
 
 # HoneyComb ----------------
 from opentelemetry import trace
@@ -184,10 +184,6 @@ def data_create_message():
 
 @app.route("/api/activities/home", methods=['GET'])
 def data_home():
-  
-  # data = HomeActivities.run()
-  # print(data)
-  # return data, 200
 
   access_token = extract_access_token(request.headers)
   try:
