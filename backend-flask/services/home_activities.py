@@ -18,8 +18,8 @@ class HomeActivities:
       # now = datetime.now(timezone.utc).astimezone()
       # span.set_attribute("app.now", now.isoformat())
       #
-      # sql= db.template('db/sql/activities', 'home.sql')
-      sql= db.template('activities', 'home.sql')
+      sql= db.template('db/sql/activities', 'home.sql')
+      # sql= db.template('activities', 'home.sql')
 
       results = db.query_json_object_array(sql)
    
