@@ -10,21 +10,21 @@ class MessageGroups:
       'errors': None,
       'data': None
     }
-    print(f"========MessageGroups==================")
+    print(f"\n========MessageGroups==================")
     sql = db.template('db/sql/users','uuid_from_cognito_user_id.sql')
-    print(f"========sql: {sql}==================")
+    print(f"\n========sql: {sql}==================")
     formattedStr = str(sql).format(cognito_user_id)
-    print(f"========formatted sql: {formattedStr}==================")
+    print(f"\n========formatted sql: {formattedStr}==================")
 
     my_user_uuid = db.query_value(formattedStr)
     
-    print(f"========UUID: {my_user_uuid}==================")
+    print(f"\n========UUID: {my_user_uuid}==================")
     ddb = Ddb.client()
     data = Ddb.list_message_groups(ddb, my_user_uuid)
-    print("===========list_message_groups================")
+    print("\n===========list_message_groups================")
     print(data)
 
     #MomentoCounter.reset(f"msgs/{user_handle}")
     model['data'] = data
     return model
-    
+  
