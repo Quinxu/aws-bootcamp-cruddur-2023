@@ -36,8 +36,9 @@ class Messages:
       'data': None
     }
 
-    sql = db.template('users','uuid_from_cognito_user_id')
-    my_user_uuid = db.query_value(f"{sql}")
+    print(f"========messages==================")
+    sql = db.template('db/sql/users','uuid_from_cognito_user_id.sql')
+    my_user_uuid = db.query_value(str(sql).format(cognito_user_id))
 
     print(f"========UUID: {my_user_uuid}==================")
 

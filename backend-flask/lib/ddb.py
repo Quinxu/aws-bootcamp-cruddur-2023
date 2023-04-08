@@ -31,7 +31,7 @@ class Ddb:
     print(query_params)
     print('================client==========================')
     print(client)
-
+    
     # query the table
     response = client.query(**query_params)
     items = response['Items']
