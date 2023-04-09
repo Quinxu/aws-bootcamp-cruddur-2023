@@ -34,17 +34,6 @@ export default function MessageGroupsPage() {
     }
   };  
 
-  // const checkAuth = async () => {
-  //   console.log('checkAuth')
-  //   // [TODO] Authenication
-  //   if (Cookies.get('user.logged_in')) {
-  //     setUser({
-  //       display_name: Cookies.get('user.name'),
-  //       handle: Cookies.get('user.username')
-  //     })
-  //   }
-  // };
-
   React.useEffect(()=>{
     //prevents double call
     if (dataFetchedRef.current) return;

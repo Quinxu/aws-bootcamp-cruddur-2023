@@ -11,7 +11,6 @@ class Messages:
     print(f"\ncognito_user_id = {cognito_user_id}")
     print(f"\nmessage_group_uuid = {message_group_uuid}")
 
-    print(f"\n========messages==================")
     sql = db.template('db/sql/users','uuid_from_cognito_user_id.sql')
     formattedStr = str(sql).format(cognito_user_id)
     my_user_uuid = db.query_value(formattedStr)

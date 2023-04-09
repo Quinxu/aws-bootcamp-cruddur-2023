@@ -15,6 +15,7 @@ class Ddb:
     return dynamodb
 
   def list_message_groups(client,my_user_uuid):
+    print(f'================list message groups==========================')
     year = str(datetime.now().year)
     table_name = 'cruddur-messages'
     query_params = {
@@ -50,6 +51,7 @@ class Ddb:
     return results
 
   def list_messages(client,message_group_uuid):
+    print(f'\n================list messages ==========================')
     year = str(datetime.now().year)
     table_name = 'cruddur-messages'
     query_params = {
@@ -65,7 +67,9 @@ class Ddb:
 
     response = client.query(**query_params)
     items = response['Items']
-    
+    print("=================items============================")
+    print(items)
+
     results = []
     for item in items:
       created_at = item['sk']['S']
