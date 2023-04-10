@@ -34,10 +34,7 @@ export default function ActivityForm(props) {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
-        // body: JSON.stringify({
-        //    message: message,
-        //    user_receiver_handle: params.handle
-        // }),
+        
         body: JSON.stringify(json)
       });
 
