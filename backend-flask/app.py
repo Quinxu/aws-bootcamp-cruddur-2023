@@ -184,8 +184,6 @@ def data_create_message():
   
   message = request.json['message']
 
-  # model = CreateMessage.run(message=message,user_sender_handle=user_sender_handle,user_receiver_handle=user_receiver_handle)
-  
   access_token = extract_access_token(request.headers)
   try:
     claims = cognito_jwt_token.verify(access_token)
