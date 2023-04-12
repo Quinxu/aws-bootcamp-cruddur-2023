@@ -31,8 +31,8 @@ class CreateMessage:
     if model['errors']:
       # return what we provided
       model['data'] = {
-        'display_name': 'Quin Xu'#'Andrew Brown',
-        'handle':  'quinxu', #user_sender_handle,
+        'display_name': 'Quin Xu',#'Andrew Brown',
+        'handle': 'quinxu', #user_sender_handle,
         'message': message
       }
     else:

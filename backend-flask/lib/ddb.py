@@ -40,8 +40,6 @@ class Ddb:
     print("=================items============================")
     print(items)
     
-   
-
     results = []
     for item in items:
         last_sent_at = item['sk']['S']
@@ -120,7 +118,7 @@ class Ddb:
     }
 
   def create_message_group(client, message,my_user_uuid, my_user_display_name, my_user_handle, other_user_uuid, other_user_display_name, other_user_handle):
-    print('== create_message_group.1')
+    print('============== create_message_group.1  ============')
     table_name = 'cruddur-messages'
 
     message_group_uuid = str(uuid.uuid4())
@@ -128,7 +126,7 @@ class Ddb:
     now = datetime.now(timezone.utc).astimezone().isoformat()
     last_message_at = now
     created_at = now
-    print('== create_message_group.2')
+    print('================= create_message_group.2 ===========')
 
     my_message_group = {
       'pk': {'S': f"GRP#{my_user_uuid}"},
@@ -140,7 +138,7 @@ class Ddb:
       'user_handle':  {'S': other_user_handle}
     }
 
-    print('== create_message_group.3')
+    print('======== create_message_group.3 ===================')
     other_message_group = {
       'pk': {'S': f"GRP#{other_user_uuid}"},
       'sk': {'S': last_message_at},
@@ -151,7 +149,7 @@ class Ddb:
       'user_handle':  {'S': my_user_handle}
     }
 
-    print('== create_message_group.4')
+    print('========= create_message_group.4  =============')
     message = {
       'pk':   {'S': f"MSG#{message_group_uuid}"},
       'sk':   {'S': created_at },

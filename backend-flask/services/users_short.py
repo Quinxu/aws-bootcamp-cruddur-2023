@@ -4,5 +4,5 @@ class UsersShort:
   def run(handle):
     sql = db.template('db/sql/users','short.sql')
     results = db.query_json_object(sql,
-      handle= handle)
+      handle=handle)
     return results
