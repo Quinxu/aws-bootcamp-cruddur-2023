@@ -2,8 +2,6 @@ from datetime import datetime, timedelta, timezone
 from lib.ddb import Ddb
 from lib.db import db
 
-
-
 class Messages:
   def run(cognito_user_id, message_group_uuid):
     model = {

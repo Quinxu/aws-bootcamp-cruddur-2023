@@ -138,8 +138,6 @@ def data_message_groups():
     cognito_user_id = claims['sub']
     model = MessageGroups.run(cognito_user_id)
     
-  # user_handle  = 'quinxu'
-  # model = MessageGroups.run(user_handle=user_handle)
     if model['errors'] is not None:
       return model['errors'], 422
     else:
@@ -159,11 +157,12 @@ def data_messages(message_group_uuid):
     app.logger.debug("authenicated")
     app.logger.debug(claims)
     cognito_user_id = claims['sub']
+    
     model = Messages.run(
         cognito_user_id,
         message_group_uuid
       )
-  # model = Messages.run(message_group_uuid=message_group_uuid)
+  
     if model['errors'] is not None:
       return model['errors'], 422
     else:
@@ -189,6 +188,7 @@ def data_create_message():
     app.logger.debug("authenicated")
     app.logger.debug(claims)
     cognito_user_id = claims['sub']
+    
     if message_group_uuid == None:
       # Create for the first time
       model = CreateMessage.run(
@@ -202,9 +202,10 @@ def data_create_message():
       model = CreateMessage.run(
         mode="update",
         message=message,
-        message_group_uuid=message_group_uuid,
-        cognito_user_id=cognito_user_id
+        cognito_user_id=cognito_user_id,
+        message_group_uuid=message_group_uuid
       )
+
     if model['errors'] is not None:
       return model['errors'], 422
     else:

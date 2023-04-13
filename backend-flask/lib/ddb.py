@@ -59,7 +59,7 @@ class Ddb:
     query_params = {
       'TableName': table_name,
       'KeyConditionExpression': 'pk = :pkey AND begins_with(sk,:year)',
-      'ScanIndexForward': False,
+      'ScanIndexForward': True, #False,
       'Limit': 20,
       'ExpressionAttributeValues': {
         ':pkey': {'S': f"MSG#{message_group_uuid}"},
@@ -72,7 +72,7 @@ class Ddb:
     print("=================items============================")
     print(items)
 
-    items.reverse()
+    # items.reverse()
 
     results = []
     for item in items:

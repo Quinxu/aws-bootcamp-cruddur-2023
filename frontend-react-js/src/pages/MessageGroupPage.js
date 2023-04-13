@@ -7,8 +7,6 @@ import MessageGroupFeed from '../components/MessageGroupFeed';
 import MessagesFeed from '../components/MessageFeed';
 import MessagesForm from '../components/MessageForm';
 
-// [TODO] Authenication
-//import Cookies from 'js-cookie'
 import checkAuth from '../lib/CheckAuth';
 
 export default function MessageGroupPage() {
