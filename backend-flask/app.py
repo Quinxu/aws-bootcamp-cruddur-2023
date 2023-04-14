@@ -215,13 +215,6 @@ def data_create_message():
     app.logger.debug(e)
     return {}, 401
   
-  
-  # if model['errors'] is not None:
-  #   return model['errors'], 422
-  # else:
-  #   return model['data'], 200
-  # return
-
 @app.route("/api/activities/home", methods=['GET'])
 def data_home():
 

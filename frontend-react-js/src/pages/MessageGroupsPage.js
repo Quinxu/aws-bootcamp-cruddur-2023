@@ -4,8 +4,6 @@ import React from "react";
 import DesktopNavigation  from '../components/DesktopNavigation';
 import MessageGroupFeed from '../components/MessageGroupFeed';
 
-// [TODO] Authenication
-//import Cookies from 'js-cookie'
 import checkAuth from '../lib/CheckAuth';
 
 export default function MessageGroupsPage() {

@@ -10,6 +10,8 @@ class CreateMessage:
       'errors': None,
       'data': None
     }
+    
+    print (f'============= mode={mode}, \n message={message}, \n cognito_user_id={cognito_user_id}, \n message_group_uuid={message_group_uuid}, \n user_receiver_handle={user_receiver_handle}')
 
     if (mode == "update"):
       if message_group_uuid == None or len(message_group_uuid) < 1:
