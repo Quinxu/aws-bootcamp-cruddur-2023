@@ -34,27 +34,27 @@ response = dynamodb.create_table(
         },
     ],
     
-    # GlobalSecondaryIndexes=[
-    #     {
-    #         'IndexName': 'string',
-    #         'KeySchema': [
-    #             {
-    #                 'AttributeName': 'string',
-    #                 'KeyType': 'HASH'|'RANGE'
-    #             },
-    #         ],
-    #         'Projection': {
-    #             'ProjectionType': 'ALL'|'KEYS_ONLY'|'INCLUDE',
-    #             'NonKeyAttributes': [
-    #                 'string',
-    #             ]
-    #         },
-    #         'ProvisionedThroughput': {
-    #             'ReadCapacityUnits': 5,
-    #             'WriteCapacityUnits': 5
-    #         }
-    #     },
-    # ],
+    GlobalSecondaryIndexes=[
+        {
+            'IndexName': 'string',
+            'KeySchema': [
+                {
+                    'AttributeName': 'string',
+                    'KeyType': 'HASH'|'RANGE'
+                },
+            ],
+            'Projection': {
+                'ProjectionType': 'ALL'|'KEYS_ONLY'|'INCLUDE',
+                'NonKeyAttributes': [
+                    'string',
+                ]
+            },
+            'ProvisionedThroughput': {
+                'ReadCapacityUnits': 5,
+                'WriteCapacityUnits': 5
+            }
+        },
+    ],
     BillingMode='PROVISIONED',
     ProvisionedThroughput={
         'ReadCapacityUnits': 5,
