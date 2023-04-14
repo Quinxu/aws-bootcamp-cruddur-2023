@@ -14,6 +14,10 @@ response = dynamodb.create_table(
     TableName='cruddur-messages',
     AttributeDefinitions=[
         {
+            'AttributeName': 'message_group_uuid',
+            'AttributeType': 'S'
+        },
+        {
             'AttributeName': 'pk',
             'AttributeType': 'S'
         },
@@ -36,18 +40,18 @@ response = dynamodb.create_table(
     
     GlobalSecondaryIndexes=[
         {
-            'IndexName': 'string',
+            'IndexName': 'message-group-sk-index',
             'KeySchema': [
                 {
-                    'AttributeName': 'string',
-                    'KeyType': 'HASH'|'RANGE'
-                },
+                    'AttributeName': 'message_group_uuid',
+                    'KeyType': 'HASH'
+                },{
+                    'AttributeName': 'sk',
+                    'KeyType': 'RANGE'
+                  }
             ],
             'Projection': {
-                'ProjectionType': 'ALL'|'KEYS_ONLY'|'INCLUDE',
-                'NonKeyAttributes': [
-                    'string',
-                ]
+                'ProjectionType': 'ALL'
             },
             'ProvisionedThroughput': {
                 'ReadCapacityUnits': 5,
