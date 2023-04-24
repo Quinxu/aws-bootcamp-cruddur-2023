@@ -4,12 +4,14 @@ import psycopg
 import os
 import sys
 
-if [ sys.argv[1] == "prod" ]:
-    print("using production")
-    CON_URL = os.getenv('PROD_CONNECTION_URL')
-else:
-    CON_URL = os.getenv('CONNECTION_URL')
+# if [ sys.argv[1] == "prod" ]:
+#     print("using production")
+#     CON_URL = os.getenv('PROD_CONNECTION_URL')
+# else:
+#     CON_URL = os.getenv('CONNECTION_URL')
 
+CON_URL = os.getenv('CONNECTION_URL')
+print(f'CON_URL={CON_URL}')
 conn = None
 try:
   print('attempting connection')
@@ -18,4 +20,5 @@ try:
 except psycopg.Error as e:
   print("Unable to connect to the database:", e)
 finally:
-  conn.close()
+  if conn != None:
+    conn.close()
