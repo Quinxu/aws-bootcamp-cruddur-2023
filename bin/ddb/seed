@@ -3,10 +3,14 @@
 import boto3, os, sys, uuid
 from datetime import datetime, timedelta, timezone
 
+# current_path = os.path.dirname(os.path.abspath(__file__))
+# parent_path = os.path.abspath(os.path.join(current_path, '..', '..'))
+# sys.path.append(parent_path)
+
 current_path = os.path.dirname(os.path.abspath(__file__))
 parent_path = os.path.abspath(os.path.join(current_path, '..', '..'))
-sys.path.append(parent_path)
-
+lib_path = os.path.join(parent_dir, "backend-flask")
+sys.path.append(lib_path)
 from lib.db import db
 
 attrs = {
