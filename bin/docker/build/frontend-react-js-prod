@@ -13,6 +13,8 @@ WORKSPACE_PATH=$(dirname $PROJECT_PATH)
 # echo $PROJECT_PATH
 # echo $WORKSPACE_PATH
 
+FRONTEND_REACT_JS_PATH="$PROJECT_PATH/frontend-react-js"
+
 docker build \
 --build-arg REACT_APP_BACKEND_URL="https://api.qinxu.shop" \
 --build-arg REACT_APP_AWS_PROJECT_REGION="$AWS_DEFAULT_REGION" \
@@ -20,5 +22,5 @@ docker build \
 --build-arg REACT_APP_AWS_USER_POOLS_ID="$AWS_COGNITO_USER_POOL_ID" \
 --build-arg REACT_APP_CLIENT_ID="2ar9lb34g0lomto8mi7h3neilf" \
 -t frontend-react-js \
--f Dockerfile.prod \
-.
+-f "$FRONTEND_REACT_JS_PATH/Dockerfile.prod" \
+"$FRONTEND_REACT_JS_PATH/."
