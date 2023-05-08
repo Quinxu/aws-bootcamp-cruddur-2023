@@ -1,0 +1,9 @@
+#! /usr/bin/bash
+
+CLUSTER_NAME="cruddur"
+SERVICE_NAME="frontend-react-js"
+
+aws ecs update-service \
+--cluster $CLUSTER_NAME \
+--service $SERVICE_NAME \
+--force-new-deployment
