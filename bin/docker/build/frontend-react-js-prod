@@ -16,7 +16,7 @@ WORKSPACE_PATH=$(dirname $PROJECT_PATH)
 FRONTEND_REACT_JS_PATH="$PROJECT_PATH/frontend-react-js"
 
 docker build \
---build-arg REACT_APP_BACKEND_URL="https://api.qinxu.shop" \
+--build-arg REACT_APP_BACKEND_URL="https://api.cruddur.buzz" \
 --build-arg REACT_APP_AWS_PROJECT_REGION="$AWS_DEFAULT_REGION" \
 --build-arg REACT_APP_AWS_COGNITO_REGION="$AWS_DEFAULT_REGION" \
 --build-arg REACT_APP_AWS_USER_POOLS_ID="$AWS_COGNITO_USER_POOL_ID" \
