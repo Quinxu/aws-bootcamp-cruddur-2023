@@ -85,7 +85,10 @@ class Db:
           # this will return a tuple
           # the first field being the data
           json = cur.fetchone()
-          return json[0]
+          if json == None:
+            return "{}"
+          else:
+            return json[0]
           
     
   def query_json_object_array(self, sql, **kwargs):

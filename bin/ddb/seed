@@ -9,7 +9,7 @@ from datetime import datetime, timedelta, timezone
 
 current_path = os.path.dirname(os.path.abspath(__file__))
 parent_path = os.path.abspath(os.path.join(current_path, '..', '..'))
-lib_path = os.path.join(parent_dir, "backend-flask")
+lib_path = os.path.join(parent_path, "backend-flask")
 sys.path.append(lib_path)
 from lib.db import db
 
