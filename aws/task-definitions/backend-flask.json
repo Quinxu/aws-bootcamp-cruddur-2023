@@ -60,12 +60,11 @@
       "name": "xray",
       "image": "public.ecr.aws/xray/aws-xray-daemon",
       "essential": true,
-      "user": 1337,
       "portMappings": [
         {
           "containerPort": 2000,
           "hostPort": 2000,
-          "protocol": "udp"
+          "protocol": "tcp"
         }
       ],
       "healthCheck": {
