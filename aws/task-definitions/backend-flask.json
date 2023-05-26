@@ -64,27 +64,20 @@
         {
           "containerPort": 2000,
           "hostPort": 2000,
-          "protocol": "tcp"
+          "protocol": "udp"
         }
       ],
-      "healthCheck": {
-        "command": [
-          "CMD-SHELL",
-          "curl -s http://localhost:2000/health | grep -q '\"status\":\"OK\"'"
-        ],
-        "interval": 30,
-        "timeout": 5,
-        "retries": 3,
-        "startPeriod": 60
-      },
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
           "awslogs-group": "cruddur",
           "awslogs-region": "ca-central-1",
-          "awslogs-stream-prefix": "xray"
+          "awslogs-stream-prefix": "backend"
         }
-      }
+      },
+      "environment": [
+        {"name": "AWSXRayDaemonConfiguration", "value": "{\"DaemonAddress\": \"xray:2000\"}"}
+      ]
     }
   ]
 }

@@ -39,6 +39,29 @@
               "awslogs-stream-prefix": "frontend-react-js"
           }
         }
+      },
+      {
+        "name": "xray",
+        "image": "public.ecr.aws/xray/aws-xray-daemon",
+        "essential": true,
+        "portMappings": [
+          {
+            "containerPort": 2000,
+            "hostPort": 2000,
+            "protocol": "udp"
+          }
+        ],
+        "logConfiguration": {
+          "logDriver": "awslogs",
+          "options": {
+            "awslogs-group": "cruddur",
+            "awslogs-region": "ca-central-1",
+            "awslogs-stream-prefix": "frontend"
+          }
+        },
+        "environment": [
+          {"name": "AWSXRayDaemonConfiguration", "value": "{\"DaemonAddress\": \"xray:2000\"}"}
+        ]
       }
     ]
   }
