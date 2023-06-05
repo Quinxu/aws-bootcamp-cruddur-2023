@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+require 'erb'
+puts "Hello!"
+template = File.read 'backend-flask.env.erb'

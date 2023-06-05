@@ -82,7 +82,7 @@ services:
 networks: 
   internal-network:
     driver: bridge
-    name: cruddur
+    name: cruddur-net
 
 volumes:
   db:
