@@ -11,7 +11,7 @@ tasks:
       cd $THEIA_WORKSPACE_ROOT
   - name: react-js
     command: |
-      source $THEIA_WORKSPACE_ROOT/bin/generate-env/frontend-react-js.rb
+      ruby $THEIA_WORKSPACE_ROOT/bin/generate-env/frontend-react-js.rb
       cd frontend-react-js
       npm i
   - name: postgres
@@ -24,7 +24,7 @@ tasks:
       source $THEIA_WORKSPACE_ROOT/bin/rds/update-sg-rule
   - name: flask
     command: |
-      source $THEIA_WORKSPACE_ROOT/bin/generate-env/backend-flask.rb
+      ruby $THEIA_WORKSPACE_ROOT/bin/generate-env/backend-flask.rb
       cd backend-flask
       pip install -r requirements.txt
   - name: fargate

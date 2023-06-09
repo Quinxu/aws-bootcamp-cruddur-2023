@@ -9,7 +9,7 @@ import ReplyForm from '../components/ReplyForm';
 
 // // [TODO] Authenication
 // import { Auth } from 'aws-amplify';
-import checkAuth from '../lib/CheckAuth';
+import {checkAuth, getAccessToken} from '../lib/CheckAuth';
 
 export default function HomeFeedPage() {
   const [activities, setActivities] = React.useState([]);
@@ -23,9 +23,11 @@ export default function HomeFeedPage() {
     try {
       const backend_url = `${process.env.REACT_APP_BACKEND_URL}/api/activities/home`
       console.log('==============back_url=', backend_url);
+      await getAccessToken()
+      const access_token = localStorage.getItem("access_token")
       const res = await fetch(backend_url, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("access_token")}`
+          Authorization: `Bearer ${access_token}`
         },
         method: "GET"
       });
