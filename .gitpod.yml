@@ -36,6 +36,7 @@ tasks:
     before: |
       cd thumbing-serverless-cdk
       npm install aws-cdk -g
+      npm install aws-cdk-lib
 vscode:
   extensions:
     - 42Crunch.vscode-openapi

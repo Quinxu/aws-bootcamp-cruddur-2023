@@ -3,3 +3,4 @@ frontend-react-js/build/*
 session-manager-plugin.deb
 frontend-react-js.env
 backend-flask.env
+node_modules
