@@ -28,8 +28,17 @@ export class ThumbingServerlessCdkStack extends cdk.Stack {
     const folderOutput: string = process.env.THUMBING_S3_FOLDER_OUTPUT as string;
     const webhookUrl: string = process.env.THUMBING_WEBHOOK_URL as string;
     const topicName: string = process.env.THUMBING_TOPIC_NAME as string;
+    
+    console.log('bucketName',bucketName)
+    console.log('folderInput',folderInput)
+    console.log('folderOutput',folderOutput)
+    console.log('webhookUrl',webhookUrl)
+    console.log('topicName',topicName)
+    console.log('functionPath',functionPath)
+    
 
-    const bucket= this.createBucket(bucketName);
+    //const bucket= this.createBucket(bucketName);
+    const bucket= this.importBucket(bucketName);
     const lambda= this.createLambda(functionPath, bucketName, folderInput, folderOutput);
 
      // This could be redundent since we have s3ReadWritePolicy?
@@ -52,13 +61,17 @@ export class ThumbingServerlessCdkStack extends cdk.Stack {
   }
 
   createBucket(bucketName:string):s3.IBucket{
-    const bucket = new s3.Bucket(this, 'ThumblingBucket', {
+    const bucket = new s3.Bucket(this, 'AssetBucket', {
       bucketName: bucketName,
       removalPolicy:cdk.RemovalPolicy.DESTROY
     });
     return bucket;
   }
 
+  importBucket(bucketName:string):s3.IBucket{
+    const bucket = s3.Bucket.fromBucketName(this, 'AssetBucket', bucketName);  
+    return bucket;
+  }
 
   createLambda(functionPath:string, bucketName: string, folderInput: string, folderOutput: string):lambda.IFunction{
     const lambdaFunction = new lambda.Function(this, 'ThumbLambda',{
