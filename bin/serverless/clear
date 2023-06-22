@@ -1,0 +1,4 @@
+#! /usr/bin/bash
+
+aws s3 rm "s3://assets.$DOMAIN_NAME/avatars/original/star-trek-data.jpg"
+aws s3 rm "s3://assets.$DOMAIN_NAME/avatars/processed/star-trek-data.png"
