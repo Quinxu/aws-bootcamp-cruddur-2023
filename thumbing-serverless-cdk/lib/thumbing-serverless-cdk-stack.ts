@@ -44,19 +44,22 @@ export class ThumbingServerlessCdkStack extends cdk.Stack {
      // This could be redundent since we have s3ReadWritePolicy?
    //  bucket.grantRead(lambda);
    //  bucket.grantPut(lambda);
- /*
+
+    //create topic and subscription
      const snsTopic = this.createSnsTopic(topicName)
      this.createSnsSubscription(snsTopic,webhookUrl)
  
      // S3 Event Notifications
-     this.createS3NotifyToSns(folderOutput,snsTopic,bucket)  */
+     this.createS3NotifyToSns(folderOutput,snsTopic,bucket)  
      this.createS3NotifyToLambda(folderInput,lambda,bucket)
- 
+    
+     //create policies
      const s3ReadWritePolicy = this.createPolicyBucketAccess(bucket.bucketArn)
- //    const snsPublishPolicy = this.createPolicySnSPublish(snsTopic.topicArn)
+     //const snsPublishPolicy = this.createPolicySnSPublish(snsTopic.topicArn)
  
+     //attach policies for permissions
      lambda.addToRolePolicy(s3ReadWritePolicy);
-//     lambda.addToRolePolicy(snsPublishPolicy);
+     //lambda.addToRolePolicy(snsPublishPolicy);
 
   }
 
@@ -97,7 +100,7 @@ export class ThumbingServerlessCdkStack extends cdk.Stack {
         {prefix: prefix} //folder contains the original images
     )
   }
-/*
+
   createS3NotifyToSns(prefix: string, snsTopic: sns.ITopic, bucket: s3.IBucket): void {
     const destination = new s3n.SnsDestination(snsTopic)
     bucket.addEventNotification(
@@ -108,7 +111,7 @@ export class ThumbingServerlessCdkStack extends cdk.Stack {
   }
 
   createSnsTopic(topicName: string): sns.ITopic{
-    const logicalName = "Topic";
+    const logicalName = "ThumbingTopic";
     const snsTopic = new sns.Topic(this, logicalName, {
       topicName: topicName
     });
@@ -121,7 +124,7 @@ export class ThumbingServerlessCdkStack extends cdk.Stack {
     )
     return snsSubscription;
   }
-*/
+
   createPolicyBucketAccess(bucketArn: string){
     const s3ReadWritePolicy = new iam.PolicyStatement({
       actions: [
@@ -146,8 +149,6 @@ export class ThumbingServerlessCdkStack extends cdk.Stack {
     });
     return snsPublishPolicy;
   }
-
-  */
-
+*/
 
 }
