@@ -13,7 +13,7 @@ class UserActivities:
     if user_handle == None or len(user_handle) < 1:
       model['errors'] = ['blank_user_handle']
     else:
-      sql= db.template('db/sql/activities', 'home.sql')
+      sql= db.template('db/sql/users', 'show.sql')
       results = db.query_json_object_array(sql)
       #now = datetime.now()
       #results = [{

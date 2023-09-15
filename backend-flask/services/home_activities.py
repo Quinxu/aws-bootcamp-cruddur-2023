@@ -11,7 +11,7 @@ class HomeActivities:
     #logger.info('Hello Cloudwatch! from  /api/activities/home')
 
     #Creating Spans 
-    #with tracer.start_as_current_span("home-activities-mock-data"):
+    with tracer.start_as_current_span("home-activities-mock-data"):
     #
       #Adding Attributes to Spans
       # span = trace.get_current_span()
